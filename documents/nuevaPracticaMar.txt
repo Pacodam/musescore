@@ -1,0 +1,28 @@
+vista: jsp
+
+controller: @ejb  servlets
+
+server: "DAO", ejb session stateless: modelo persistencia, entity manager
+
+hibernate, orm JPA pojos, modelo entities.
+
+8 de mayo : examen
+
+
+Instalacion
+
+
+Nuevo proyecto: java web -> web application
+
+como Server: GlassFish server 4.1.1 (si no sale le damos a add y seguimos indicaciones)
+Java EE version: Java EE 7 web
+context path: es la url.
+En siguiente, le decimos que trabajaremos con Hibernate.  Nos pedirá la conexión (ver apuntes Hibernate)
+
+Al acabar crea aplicacion web, parte web(servlets, entities y model) y parte codigo fuente
+
+
+damRestaurantJPA  github de Mar fontana
+baskettEE es otro proyecto
+
+
