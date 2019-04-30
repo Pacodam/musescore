@@ -5,7 +5,12 @@
  */
 package beans;
 
+import entities.User;
+import exceptions.MusicException;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 /**
  *
@@ -14,6 +19,16 @@ import javax.ejb.Stateless;
 @Stateless
 public class EjbMusic {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceUnit
+    EntityManagerFactory emf;
+    
+    public void insertUser(User t) throws MusicException {
+        EntityManager em = emf.createEntityManager();
+        User exist = em.find(User.class, t.getUsername());
+        if (exist != null) {
+            throw new MusicException("User already exists.");
+        }
+        em.persist(t);
+        em.close();
+    }
 }
