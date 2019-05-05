@@ -14,7 +14,7 @@
     </head>
     <body>
          <%
-            String msg = (String) request.getAttribute("msg");
+            String msg = (String) request.getAttribute("status");
              %>
              <%= msg %>
         <a href="index.jsp">Return to menu</a>
