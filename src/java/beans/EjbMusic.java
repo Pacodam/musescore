@@ -41,6 +41,7 @@ public class EjbMusic {
         q.setParameter("username", t.getUsername());
         q.setParameter("password", t.getPassword());
         return q.getResultList();
+        
     }
     
     public User getUser(String username){
@@ -54,4 +55,30 @@ public class EjbMusic {
         em.persist(s);
         em.close();
     }
+    
+    public List<Sheetmusic> getSheetsFromUser(User u){
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Sheetmusic.findByOwner");
+        q.setParameter("owner", u);
+        return q.getResultList();
+    }
+    
+    public Sheetmusic getSheetById(int id){
+        EntityManager em = emf.createEntityManager();
+        Sheetmusic orig = em.find(Sheetmusic.class, id);
+       // Query q = em.createNamedQuery("Sheetmusic.findByIdsheetmusic");
+        return orig;
+        
+    }
+    
+    public void modifySheet(Sheetmusic s){
+        Sheetmusic origin = getSheetById(s.getIdsheetmusic());
+        if(origin != null){
+            //s.merge(origin);
+            
+        }
+        
+    }
+    
+    
 }

@@ -6,6 +6,8 @@
 package servlets;
 
 import beans.EjbMusic;
+import entities.Sheetmusic;
+import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -14,20 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import entities.User;
-import java.util.List;
+
 /**
  *
  * @author MSI
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
-    
+@WebServlet(name = "ModifySheet", urlPatterns = {"/ModifySheet"})
+public class ModifySheet extends HttpServlet {
+
      @EJB
      EjbMusic ejb;
-
-    public static final String STATUS_OK = "userOk";
-    public static final String STATUS_ERROR = "userError";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,21 +37,31 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        User user = new User(username, password, " ");
-        List<User> result = ejb.loginUser(user);
-        if(!result.isEmpty()){
-            request.setAttribute("status", STATUS_OK);
-            request.getSession(true).setAttribute("user", result.get(0));
-            response.sendRedirect(request.getContextPath() + "/menu.jsp");   
-        }
-        else{
-        request.setAttribute("status", STATUS_ERROR);
-        request.getRequestDispatcher("/final.jsp").forward(request, response);
-        }
-     }
-    
+        response.setContentType("text/html;charset=UTF-8");
+        
+        int id = Integer.parseInt(request.getParameter("sheetId"));
+        //nos traemos el sheet
+        String title = request.getParameter("title");
+        String artist  = request.getParameter("artist");
+        String instrument = request.getParameter("instrument");
+        String genre = request.getParameter("genre");
+        String difficulty  = request.getParameter("difficulty");
+        Boolean printed  = Boolean.parseBoolean(request.getParameter("printed"));
+        User u = (User) request.getSession(true).getAttribute("user");
+        //User user = ejb.getUser((String) request.getParameter("user"));
+        Sheetmusic sheet = new Sheetmusic();
+        sheet.setIdsheetmusic(id);
+        sheet.setArtist(artist);
+        sheet.setTitle(title);
+        sheet.setInstrument(instrument);
+        sheet.setGenre(genre);
+        sheet.setDifficulty(difficulty);
+        sheet.setPrinted(printed);
+        sheet.setOwner(u);
+        
+        ejb.modifySheet(sheet);
+        request.getRequestDispatcher("/menu.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

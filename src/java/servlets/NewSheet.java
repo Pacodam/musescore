@@ -48,7 +48,8 @@ public class NewSheet extends HttpServlet {
         String genre = request.getParameter("genre");
         String difficulty  = request.getParameter("difficulty");
         Boolean printed  = Boolean.parseBoolean(request.getParameter("printed"));
-        User user = ejb.getUser((String) request.getAttribute("user"));
+        User u = (User) request.getSession(true).getAttribute("user");
+        //User user = ejb.getUser((String) request.getParameter("user"));
         Sheetmusic sheet = new Sheetmusic();
         sheet.setArtist(artist);
         sheet.setTitle(title);
@@ -56,7 +57,7 @@ public class NewSheet extends HttpServlet {
         sheet.setGenre(genre);
         sheet.setDifficulty(difficulty);
         sheet.setPrinted(printed);
-        sheet.setOwner(user);
+        sheet.setOwner(u);
         
         ejb.insertSheet(sheet);
         request.getRequestDispatcher("/menu.jsp").forward(request, response);
