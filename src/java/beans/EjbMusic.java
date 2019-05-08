@@ -72,13 +72,20 @@ public class EjbMusic {
     }
     
     public void modifySheet(Sheetmusic s){
+        EntityManager em = emf.createEntityManager();
         Sheetmusic origin = getSheetById(s.getIdsheetmusic());
         if(origin != null){
-            //s.merge(origin);
-            
-        }
-        
+            origin.setTitle(s.getTitle());
+            origin.setArtist(s.getArtist());
+            origin.setDifficulty(s.getDifficulty());
+            origin.setGenre(s.getGenre());
+            origin.setInstrument(s.getInstrument());
+           em.persist(origin); 
+           em.close();
+        }  
     }
+    
+    // borrar find by id y remove
     
     
 }

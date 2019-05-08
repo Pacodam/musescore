@@ -23,11 +23,11 @@
     </form>
 
     <form action="SheetsFromUser">
-        <input type="submit" value="Sheet modification">
+        <input type="submit" value="Sheet modification" name="boton">
     </form>
 
     <form action="SheetsFromUser">
-        <input type="submit" value="Remove sheet">
+        <input type="submit" value="Remove sheet" name="boton">
     </form>
 
     <form action="allSheets.jsp">
