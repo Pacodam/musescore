@@ -73,7 +73,8 @@ public class ModifySheet extends HttpServlet {
             sheet.setOwner(u);
 
             ejb.modifySheet(sheet);
-            request.getRequestDispatcher("/menu.jsp").forward(request, response);
+             request.setAttribute("status", "Sheet modified. Redirecting to menu");
+            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
         }
     }
 

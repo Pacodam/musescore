@@ -22,11 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MSI
  */
-@WebServlet(name = "DeleteSheet", urlPatterns = {"/DeleteSheet"})
-public class DeleteSheet extends HttpServlet {
-
-     @EJB
+@WebServlet(name = "SheetByInstrument", urlPatterns = {"/SheetByInstrument"})
+public class SheetByInstrument extends HttpServlet {
+    
+       @EJB
     EjbMusic ejb;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,25 +39,13 @@ public class DeleteSheet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            //primero recibimos el indicador de que se ha seleccionado un sheet para  borrar, solicitamos confirmación
-           if (request.getParameter("send") != null) {
-            int id = Integer.parseInt(request.getParameter("sheetId"));
-            request.setAttribute("sheetId", id);
-            User u = (User) request.getSession(true).getAttribute("user");
-            List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
-            request.setAttribute("sheets", sheets);
-            request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
+             if (request.getParameter("send") != null) {
+                String instrument = request.getParameter("instrument");
+                List<Sheetmusic> sheets = ejb.getSheetsByInstrument(instrument);
+                request.setAttribute("sheets", sheets);
+                request.getRequestDispatcher("/instrumentSheet.jsp").forward(request, response);
             
-        }
-           //si se ha producido la confirmación, se borra el sheet
-        else if(request.getParameter("send2") != null){
-            int id = Integer.parseInt(request.getParameter("id"));
-            ejb.deleteSheet(id);
-             request.setAttribute("status", "Sheet deleted. Redirecting to menu");
-            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
-          
-          }
+             }
         }
     
 

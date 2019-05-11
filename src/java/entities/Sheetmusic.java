@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Sheetmusic.findByInstrument", query = "SELECT s FROM Sheetmusic s WHERE s.instrument = :instrument")
     , @NamedQuery(name = "Sheetmusic.findByGenre", query = "SELECT s FROM Sheetmusic s WHERE s.genre = :genre")
     , @NamedQuery(name = "Sheetmusic.findByDifficulty", query = "SELECT s FROM Sheetmusic s WHERE s.difficulty = :difficulty")
-    , @NamedQuery(name = "Sheetmusic.findByPrinted", query = "SELECT s FROM Sheetmusic s WHERE s.printed = :printed")})
+    , @NamedQuery(name = "Sheetmusic.findByPrinted", query = "SELECT s FROM Sheetmusic s WHERE s.printed = :printed")
+})
 public class Sheetmusic implements Serializable {
 
     private static final long serialVersionUID = 1L;

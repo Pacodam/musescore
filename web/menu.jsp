@@ -10,11 +10,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Menu</title>
     </head>
     <body>
         <h1>Menu</h1>
-    </body>
+    
     <% User user = (User) session.getAttribute("user");
         if (user != null) {%>
 
@@ -42,7 +43,7 @@
         <input type="submit" value="View sheets by instrument ">
     </form>
 
-    <form action="rankingSheet.jsp">
+    <form action="Ranking">
         <input type="submit" value="Sheets ranking (more to less)">
     </form>
 
@@ -54,4 +55,5 @@
          <a href="index.jsp">Return to menu</a>
          
          <% } %>
+    </body>
 </html>

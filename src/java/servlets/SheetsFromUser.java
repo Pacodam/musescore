@@ -54,7 +54,7 @@ public class SheetsFromUser extends HttpServlet {
             }
         } else {
             request.setAttribute("status", "No sheets uploaded yet");
-            request.getRequestDispatcher("/final.jsp").forward(request, response);
+            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
         }
 
     }

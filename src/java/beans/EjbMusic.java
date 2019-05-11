@@ -5,6 +5,7 @@
  */
 package beans;
 
+import entities.SheetRanking;
 import entities.Sheetmusic;
 import entities.User;
 import exceptions.MusicException;
@@ -99,4 +100,22 @@ public class EjbMusic {
         em.close();
     }
     
+    public List<Sheetmusic> getSheetsByInstrument(String instrument){
+         EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Sheetmusic.findByInstrument");
+        q.setParameter("instrument", instrument);
+        return q.getResultList();
+    }
+
+    public List<SheetRanking> getRanking() {
+        EntityManager em = emf.createEntityManager();
+        //Query query = em.createQuery("SELECT COUNT(DISTINCT p.owner) FROM Sheetmusic e JOIN e.phones p GROUP BY e");
+        Query query = em.createQuery("SELECT owner as user, count(*) as total FROM Sheetmusic GROUP BY user ORDER BY 1");
+        System.out.println(query.getResultList());
+        em.getTransaction().commit();
+        em.close();
+        return null;
+    }
+    
+   // SELECT e.dept.deptno as department_number , count(*) as total FROM Sheetmusic GROUP BY  by e.dept.deptno ORDER BY 1"
 }

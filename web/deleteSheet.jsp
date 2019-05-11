@@ -37,16 +37,22 @@
         </select>
         <input type="submit" name="send" value="Delete this sheet">
     </form>
+        
+    <br> <a href="menu.jsp">Return to menu</a>
 
     <br>
     <br>
     <%
-        if (request.getAttribute("sheetId") != null) {
-            int id = (int) request.getAttribute("sheetId");
+        if(request.getAttribute("sheetId") != null) {
+             request.setAttribute("id", "1"); 
+           // int id = (int) request.getAttribute("sheetId");
     %>
     <form action="DeleteSheet" method="post">
-         <input type="submit" name="send2" value="Confirm">
-         <input type="submit" name="send2" value="Menu">
+         <input type="submit" name="send2" value="Confirm"> 
+    </form>
+    
+     <form action="SheetsFromUser">
+        <input type="submit" value="Remove sheet" name="boton">
     </form>
 
 <%
@@ -56,8 +62,8 @@
 
 
 <% } else { %>
-<div>You got no authorization. Login</div>
-<a href="index.jsp">Return to menu</a>
+<div>You got no authorization. Login first</div>
+<a href="index.jsp">Return to home</a>
 
 <% }%>
 </html>

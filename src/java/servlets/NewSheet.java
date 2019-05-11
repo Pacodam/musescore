@@ -60,7 +60,8 @@ public class NewSheet extends HttpServlet {
         sheet.setOwner(u);
         
         ejb.insertSheet(sheet);
-        request.getRequestDispatcher("/menu.jsp").forward(request, response);
+        request.setAttribute("status", "Sheet created. Redirecting to menu");
+        request.getRequestDispatcher("/redirection.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

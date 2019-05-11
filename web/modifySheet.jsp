@@ -37,6 +37,8 @@
         </select>
         <input type="submit" name="send" value="Select this sheet">
     </form>
+        
+        <br> <a href="menu.jsp">Return to menu</a>
 
     <br>
     <br>
@@ -87,13 +89,12 @@ Printed:
 
     </form>
 
+    
 
 
 <%
     }
 %>
-
-
 
 <% } else { %>
 <div>You got no authorization. Login</div>
