@@ -7,7 +7,6 @@ package servlets;
 
 import beans.EjbMusic;
 import entities.Sheetmusic;
-import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,12 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MSI
  */
-@WebServlet(name = "SheetsFromUser", urlPatterns = {"/SheetsFromUser"})
-public class SheetsFromUser extends HttpServlet {
+@WebServlet(name = "AllSheets", urlPatterns = {"/AllSheets"})
+public class AllSheets extends HttpServlet {
 
-    @EJB
+    
+     @EJB
     EjbMusic ejb;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,24 +38,16 @@ public class SheetsFromUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User u = (User) request.getSession(true).getAttribute("user");
-        List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
+             List<Sheetmusic> sheets = ejb.getSheets();
         if (!sheets.isEmpty()) {
             request.setAttribute("sheets", sheets);
-            if (request.getParameter("boton").equals("Sheet modification")) {
-                request.getRequestDispatcher("/modifySheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Remove sheet")) {
-                request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Sheets from user")) {
-                request.getRequestDispatcher("/sheetsUser.jsp").forward(request, response);
-            }
+            request.getRequestDispatcher("/sheetsUser.jsp").forward(request, response);
+       
         } else {
             request.setAttribute("status", "No sheets uploaded yet");
             request.getRequestDispatcher("/final.jsp").forward(request, response);
         }
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

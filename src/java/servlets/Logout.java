@@ -5,28 +5,21 @@
  */
 package servlets;
 
-import beans.EjbMusic;
-import entities.Sheetmusic;
-import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MSI
  */
-@WebServlet(name = "SheetsFromUser", urlPatterns = {"/SheetsFromUser"})
-public class SheetsFromUser extends HttpServlet {
-
-    @EJB
-    EjbMusic ejb;
+@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,24 +32,14 @@ public class SheetsFromUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User u = (User) request.getSession(true).getAttribute("user");
-        List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
-        if (!sheets.isEmpty()) {
-            request.setAttribute("sheets", sheets);
-            if (request.getParameter("boton").equals("Sheet modification")) {
-                request.getRequestDispatcher("/modifySheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Remove sheet")) {
-                request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Sheets from user")) {
-                request.getRequestDispatcher("/sheetsUser.jsp").forward(request, response);
-            }
-        } else {
-            request.setAttribute("status", "No sheets uploaded yet");
-            request.getRequestDispatcher("/final.jsp").forward(request, response);
-        }
-
+      
+           HttpSession session = request.getSession(false);
+               if (session != null) {
+               session.invalidate();
+          }
+          request.setAttribute("status", "See you soon!"); 
+          request.getRequestDispatcher("/final.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

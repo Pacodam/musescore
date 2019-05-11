@@ -63,6 +63,12 @@ public class EjbMusic {
         return q.getResultList();
     }
     
+     public List<Sheetmusic> getSheets(){
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("Sheetmusic.findAll");
+        return q.getResultList();
+    }
+    
     public Sheetmusic getSheetById(int id){
         EntityManager em = emf.createEntityManager();
         Sheetmusic orig = em.find(Sheetmusic.class, id);
@@ -86,6 +92,11 @@ public class EjbMusic {
     }
     
     // borrar find by id y remove
-    
+    public void deleteSheet(int sheetId){
+        EntityManager em = emf.createEntityManager();
+        Sheetmusic sheet = getSheetById(sheetId);
+        em.remove(sheet);
+        em.close();
+    }
     
 }

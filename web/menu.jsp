@@ -30,12 +30,12 @@
         <input type="submit" value="Remove sheet" name="boton">
     </form>
 
-    <form action="allSheets.jsp">
+    <form action="AllSheets">
         <input type="submit" value="View all sheets">
     </form>
 
-    <form action="userSheet.jsp">
-        <input type="submit" value="View sheets from an user">
+    <form action="SheetsFromUser">
+        <input type="submit" value="Sheets from user" name="boton">
     </form>
 
     <form action="instrumentSheet.jsp">
@@ -46,7 +46,7 @@
         <input type="submit" value="Sheets ranking (more to less)">
     </form>
 
-    <form action="logout.jsp">
+    <form action="Logout">
         <input type="submit" value="Logout">
     </form>
     <% } else { %>

@@ -22,12 +22,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MSI
  */
-@WebServlet(name = "SheetsFromUser", urlPatterns = {"/SheetsFromUser"})
-public class SheetsFromUser extends HttpServlet {
+@WebServlet(name = "DeleteSheet", urlPatterns = {"/DeleteSheet"})
+public class DeleteSheet extends HttpServlet {
 
-    @EJB
+     @EJB
     EjbMusic ejb;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,24 +38,26 @@ public class SheetsFromUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User u = (User) request.getSession(true).getAttribute("user");
-        List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
-        if (!sheets.isEmpty()) {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
+            //primero recibimos el indicador de que se ha seleccionado un sheet para  borrar, solicitamos confirmación
+           if (request.getParameter("send") != null) {
+            int id = Integer.parseInt(request.getParameter("sheetId"));
+            request.setAttribute("sheetId", id);
+            User u = (User) request.getSession(true).getAttribute("user");
+            List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
             request.setAttribute("sheets", sheets);
-            if (request.getParameter("boton").equals("Sheet modification")) {
-                request.getRequestDispatcher("/modifySheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Remove sheet")) {
-                request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
-            }
-            if (request.getParameter("boton").equals("Sheets from user")) {
-                request.getRequestDispatcher("/sheetsUser.jsp").forward(request, response);
-            }
-        } else {
-            request.setAttribute("status", "No sheets uploaded yet");
-            request.getRequestDispatcher("/final.jsp").forward(request, response);
+            request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
+            
         }
-
+        else if(request.getParameter("send2") != null){
+           
+            int id = Integer.parseInt(request.getParameter("sheetId"));
+            ejb.deleteSheet(id);
+            request.getRequestDispatcher("/menu.jsp").forward(request, response);
+        }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

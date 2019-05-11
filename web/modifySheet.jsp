@@ -54,7 +54,7 @@
     Title:<input type ="text" name="title" required value="<%= s.getTitle() %>">
     <br>   
 
-    Artist:<input type="text" name="artist" size="40" required>
+    Artist:<input type="text" name="artist" size="40" value= "<%= s.getArtist()%>"required>
     <br>
 
     Instrument:
@@ -65,7 +65,7 @@
         <option value="Flute" <% if (s.getInstrument().equalsIgnoreCase("flute")) { %> selected <% } %> >Flute</option></select>
     <br>
 
-    Genre:<input type="text" name="genre" size="40" required></td>   
+    Genre:<input type="text" name="genre" size="40" required value = "<%= s.getGenre() %>"></td>   
 <br>  
 
 Difficulty:<br>
