@@ -44,16 +44,15 @@
     <br>
     <%
         if(request.getAttribute("sheetId") != null) {
-             request.setAttribute("id", "1"); 
-           // int id = (int) request.getAttribute("sheetId");
-    %>
-    <form action="DeleteSheet" method="post">
+            request.setAttribute("id", request.getAttribute("sheetId"));
+     %>
+<!--    <form action="DeleteSheet" method="post">
          <input type="submit" name="send2" value="Confirm"> 
     </form>
     
      <form action="SheetsFromUser">
         <input type="submit" value="Remove sheet" name="boton">
-    </form>
+    </form>-->
 
 <%
     }

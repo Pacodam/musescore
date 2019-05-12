@@ -9,6 +9,8 @@ import entities.SheetRanking;
 import entities.Sheetmusic;
 import entities.User;
 import exceptions.MusicException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -92,13 +94,15 @@ public class EjbMusic {
         }  
     }
     
-    // borrar find by id y remove
+    
+     // borrar find by id y remove
     public void deleteSheet(int sheetId){
         EntityManager em = emf.createEntityManager();
         Sheetmusic sheet = getSheetById(sheetId);
-        em.remove(sheet);
-        em.close();
+        sheet = em.merge(sheet);
+        em.remove(sheet);  
     }
+    
     
     public List<Sheetmusic> getSheetsByInstrument(String instrument){
          EntityManager em = emf.createEntityManager();
@@ -106,15 +110,26 @@ public class EjbMusic {
         q.setParameter("instrument", instrument);
         return q.getResultList();
     }
+    
+    public List<User> getAllUsers(){
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("User.findAll");
+        List<User> users = q.getResultList();
+        return users;
+    }
 
     public List<SheetRanking> getRanking() {
         EntityManager em = emf.createEntityManager();
-        //Query query = em.createQuery("SELECT COUNT(DISTINCT p.owner) FROM Sheetmusic e JOIN e.phones p GROUP BY e");
-        Query query = em.createQuery("SELECT owner as user, count(*) as total FROM Sheetmusic GROUP BY user ORDER BY 1");
-        System.out.println(query.getResultList());
-        em.getTransaction().commit();
-        em.close();
-        return null;
+        List<SheetRanking> ranking = new ArrayList<>();
+        List<User> users = getAllUsers();
+        for(User u: users){
+            SheetRanking s = new SheetRanking();
+            s.setOwner(u.getUsername());
+            s.setNumber(u.getSheetmusicList().size());
+            ranking.add(s);
+        }
+        Collections.sort(ranking);
+        return ranking;
     }
     
    // SELECT e.dept.deptno as department_number , count(*) as total FROM Sheetmusic GROUP BY  by e.dept.deptno ORDER BY 1"

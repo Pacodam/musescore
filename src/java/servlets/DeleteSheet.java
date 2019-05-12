@@ -39,24 +39,19 @@ public class DeleteSheet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            //primero recibimos el indicador de que se ha seleccionado un sheet para  borrar, solicitamos confirmación
-           if (request.getParameter("send") != null) {
-            int id = Integer.parseInt(request.getParameter("sheetId"));
-            request.setAttribute("sheetId", id);
             User u = (User) request.getSession(true).getAttribute("user");
             List<Sheetmusic> sheets = ejb.getSheetsFromUser(u);
             request.setAttribute("sheets", sheets);
-            request.getRequestDispatcher("/deleteSheet.jsp").forward(request, response);
+            //primero recibimos el indicador de que se ha seleccionado un sheet para  borrar, solicitamos confirmación
+           if (request.getParameter("send") != null) {
+            int id = Integer.parseInt(request.getParameter("sheetId"));
+             ejb.deleteSheet(id);
+             request.setAttribute("status", "Sheet deleted. Redirecting to menu");
+            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
             
         }
            //si se ha producido la confirmación, se borra el sheet
-        else if(request.getParameter("send2") != null){
-            int id = Integer.parseInt(request.getParameter("id"));
-            ejb.deleteSheet(id);
-             request.setAttribute("status", "Sheet deleted. Redirecting to menu");
-            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
-          
-          }
+        
         }
     
 
@@ -86,7 +81,16 @@ public class DeleteSheet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         if(request.getParameter("send2") != null){
+            int id = Integer.parseInt(request.getParameter("id"));
+               System.out.println(id);
+            ejb.deleteSheet(id);
+             request.setAttribute("status", "Sheet deleted. Redirecting to menu");
+            request.getRequestDispatcher("/redirection.jsp").forward(request, response);
+          
+          }
         processRequest(request, response);
+        
     }
 
     /**

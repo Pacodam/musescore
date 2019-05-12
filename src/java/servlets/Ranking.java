@@ -7,6 +7,7 @@ package servlets;
 
 import beans.EjbMusic;
 import entities.SheetRanking;
+import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -38,8 +39,9 @@ public class Ranking extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-        List<SheetRanking> rank = ejb.getRanking();
-        
+        List<SheetRanking> ranking = ejb.getRanking();
+        request.setAttribute("ranking", ranking);
+         request.getRequestDispatcher("/ranking.jsp").forward(request, response);
         }
     
     @Override

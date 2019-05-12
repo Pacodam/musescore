@@ -14,13 +14,34 @@ public class SheetRanking implements Comparable<SheetRanking> {
     private String owner;
     private int number;
     
+    public SheetRanking(){}
     public SheetRanking(String owner, int number){
         this.owner = owner;
         this.number = number;
     }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+    
+    
+    
+    
+
     @Override
     public int compareTo(SheetRanking o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return o.getNumber() - number;
     }
 }
